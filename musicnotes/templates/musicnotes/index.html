@@ -55,8 +55,8 @@
                   <tbody>
                   {% for song in song_list %}
                     <tr>
-                        <td> {{song.artist}}</td>
-                        <td> <a href="{% url 'musicnotes:song-detail' song.pk%}">{{song.title}} </a></td>
+                        <td><h3>{{song.artist}}</h3> </td>
+                        <td> <a href="{% url 'musicnotes:song-detail' song.pk%}"><h3>{{song.title}} </h3></a></td>
                     </tr>
                   {% endfor %}
                   </tbody>
