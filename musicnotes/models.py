@@ -1,13 +1,7 @@
 from django.db import models
-from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.urlresolvers import reverse
-from django import template
-import calendar
-import locale
-# Create your models here.
 
 # Profile (one to one extension of User class)
 class Profile(models.Model):
