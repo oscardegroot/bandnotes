@@ -1,0 +1,38 @@
+
+{% include 'musicnotes/message-template.html' %}
+<div class="form-group text-center">
+    <div class="col-sm-offset-2 col-sm-10">
+        <span class="text-danger small">{{ form.capo.errors }}</span>
+    </div>
+    <label class="control-label" for="capo">{{form.capo.label_tag}}</label>
+    <div class="row">
+      <div class="col-xs-12 col-lg-offset-5 col-lg-2">
+        <select class="form-control" id="capo" initial="0">
+            <option>0</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+      </div>
+</div>
+
+<div class="form-group text-center">
+    <div class="col-sm-offset-2 col-sm-10">
+        <span class="text-danger small">{{ form.music.errors }}</span>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-lg-offset-2 col-lg-8">
+        <label class="control-label" for="music">{{ form.music.label_tag }}</label>
+        <input class="form-control input-lg" type="text" id="music" initial="{{form.music}}">
+      </div>
+    </div>
+</div>

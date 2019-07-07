@@ -1,0 +1,36 @@
+{% extends 'musicnotes/base.html' %}
+{% load apptags %}
+{% block title %} Band Notes {% endblock %}
+
+{% block body %}
+<section id="paginate">
+    <div class="container-fluid">
+        <ul class="pagination pagination-lg">
+            <li class="active"><a href="">Info</a></li>
+            <li><a href="{% url 'musicnotes:add-song-2' %}">Structure</a></li>
+            <li><a href="{% url 'musicnotes:add-song-3' %}">Chords</a></li>
+        </ul>
+    </div>
+</section>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 text-center">
+            <h2 class="list-title">Song Transcribing</h2>
+            <div class="well">
+            <!--<div class="panel panel-default">-->
+                    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% include 'musicnotes/form-template.html' %}
+                        <div class="form-group">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">Next</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% for field in form %}
+    {% include 'musicnotes/message-template.html' %}
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <span class="text-danger small">{{ field.errors }}</span>
+        </div>
+        <label class="control-label" for="inputDefault">{{ field.label_tag }}</label>
+        <!--<input type="text" class="form-control" id="inputDefault">-->
+
+        <!--<label class="control-label"><p class="tab text-left">{{ field.label_tag }}</p></label>-->
+        <p id="inputDefault">{{ field }}</p>
+    </div>
+
+{% endfor %}

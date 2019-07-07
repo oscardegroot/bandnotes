@@ -1,0 +1,57 @@
+{% extends 'musicnotes/base.html' %}
+{% load apptags %}
+{% block title %} Band Notes {% endblock %}
+
+{% block body %}
+
+<section id="paginate">
+    <div class="container-fluid">
+        <ul class="pagination pagination-lg">
+            <li><a href="{% url 'musicnotes:add-song-1' %}">Info</a></li>
+            <li><a href="{% url 'musicnotes:add-song-2' %}">Structure</a></li>
+            <li class="active"><a href="">Chords</a></li>
+        </ul>
+    </div>
+</section>
+
+<section id="song">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                {% for song_part in song_part_list %}
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{song_part}}</h3>
+                    </div>
+                    <div class="panel-body">
+                    {% if instrument_part_list|at_index:forloop.counter0 == None %}
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% include 'musicnotes/music_form.html' %}
+                            <button type="submit" name="{{song_part.pk}}" class="btn btn-success">Done!</button>
+                        </form>
+                    {% else %}
+                        {% with instrument_part_list|at_index:forloop.counter0 as instr %}
+                        <h2>{{instr.music|safe}}</h2>
+                        {% endwith %}
+
+                    {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 text-center">
+            <a href="{% url 'musicnotes:finish-song' %}" class="btn btn-success">Next</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

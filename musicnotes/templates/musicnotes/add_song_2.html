@@ -1,0 +1,82 @@
+{% extends 'musicnotes/base.html' %}
+{% load apptags %}
+{% block title %} Band Notes {% endblock %}
+
+{% block body %}
+
+<section id="paginate">
+    <div class="container-fluid">
+        <ul class="pagination pagination-lg">
+            <!--<li class="disabled"><a href="#">&laquo;</a></li>-->
+            <li><a href="{% url 'musicnotes:add-song-1' %}">Info</a></li>
+            <li class="active"><a href="">Structure</a></li>
+            <li><a href="{% url 'musicnotes:add-song-3' %}">Chords</a></li>
+            <!--<li><a href="#">&raquo;</a></li>-->
+        </ul>
+    </div>
+</section>
+
+<section id="song">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 text-center">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{song}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group">
+                        {% for song_part in song_part_list %}
+                            <li class="list-group-item">
+                                <span class="badge"><h5>{{song_part.count}}</h5></span>
+                                <h4>{{song_part}} <a href="{% url 'musicnotes:remove-song-part' song_part.pk %}"><span class="glyphicon glyphicon-trash"></span></a></h4>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6 text-center">
+                <!--<h2> Define a new part </h2>-->
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> New Parts </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn-group btn-group-justified">
+                            {% for part in new_parts %}
+                            <a class="btn btn-warning" href="{% url 'musicnotes:add-song-part' forloop.counter0 %}">{{part}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"> Existing Parts </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="btn-group btn-group-justified">
+                            {% for part in existing_parts %}
+                            <a class="btn btn-success" href="{% url 'musicnotes:add-existing-song-part' part.pk %}">{{part}}</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 text-center">
+            <a href="{% url 'musicnotes:add-song-3' %}" class="btn btn-success">Next</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

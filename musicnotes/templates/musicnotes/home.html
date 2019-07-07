@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Band Notes {% endblock %}</title>
+    <!-- load static files -->
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'musicnotes/bootstrap.css' %}">
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+    <!--<link href='https://fonts.googleapis.com/css?family=Exo+2' rel='stylesheet' type='text/css'>-->
+    <!--<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <!--<link rel="stylesheet" type="text/css" href="{% static 'picnic/style.css' %}" />-->
+    <!--&lt;!&ndash;<link rel="stylesheet" type="text/css" href="{% static 'picnic/theme/main.css' %}" />&ndash;&gt;-->
+    <!--<link rel="stylesheet" href="{% static 'picnic/theme/flexslider.css' %}">-->
+    <!--<link rel="stylesheet" href="{% static 'picnic/theme/jquery.fancybox.css' %}">-->
+    <!--<link rel="stylesheet" href="{% static 'picnic/theme/main.css' %}">-->
+    <!--<link rel="stylesheet" href="{% static 'picnic/theme/responsive.css' %}">-->
+    <!--<link rel="stylesheet" href="{% static 'picnic/theme/font-icon.css' %}">-->
+    <!--<link rel="stylesheet" href="{% static 'picnic/theme/animate.min.css' %}">-->
+
+<div class="floating-container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <div class="jumbotron">
+                <h1>Band Notes</h1>
+                <p>Save and play your favourite music and profit from a library of awesome songs!</p>
+                <p><a href="{% url 'musicnotes:register' %}" class="btn btn-primary btn-lg">Get started!</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="floating-container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <a href="{% url 'musicnotes:login' %}" class="btn btn-block btn-success">Log In</a>
+        </div>
+    </div>
+</div>
+<!-- intro section -->
+</head>

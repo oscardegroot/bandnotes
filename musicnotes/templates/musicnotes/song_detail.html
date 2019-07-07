@@ -1,0 +1,23 @@
+{% extends 'musicnotes/base.html' %}
+{% load apptags %}
+{% block title %} {{song.title}} {% endblock %}
+
+{% block body %}
+<div class="container-fluid text-center">
+    <h2>{{song}}</h2>
+</div>
+
+<div class="container-fluid">
+    {% for instrument_part in instrument_part_list %}
+        <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-2">
+                <div class="btn btn-warning btn-block"> <h2>{{instrument_part.song_part}}</h2></div>
+            </div>
+            <div class="col-xs-9 col-sm-9 col-md-10 well">
+                <h2>{{instrument_part.music|safe}}</h2>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
