@@ -1,25 +1,9 @@
-from django.views.generic.edit import CreateView, UpdateView
 from .base import LoginRequiredMixin
 from ..forms import SongForm, InstrumentForm
-from django.url import reverse
-from django.views.generic.detail import DetailView
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from django.shortcuts import render,redirect, HttpResponseRedirect
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from ..models import Profile, Song, SongPart, InstrumentPart
-from django.db.models import Max
-
-from functools import reduce
-from django.db.models import Q
-import operator
-
-
-# Item creation view
-# class SongFormView(LoginRequiredMixin, CreateView):
-#     model = Song
-#     form_class = SongForm
 
 # Multi step creation of songs
 def addSongStep1(request):
