@@ -1,3 +1,4 @@
 .idea/
 bandnotes/
 manage.py
+musicnotes/views/__pycache__/
