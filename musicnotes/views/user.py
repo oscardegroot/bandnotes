@@ -17,7 +17,7 @@ class LoginFormView(View):
     template_name = 'musicnotes/login_form.html'
 
     def get(self, request):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return redirect('musicnotes:index')
 
         form = self.form_class(None)
