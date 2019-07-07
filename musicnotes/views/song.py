@@ -1,7 +1,7 @@
 from django.views.generic.edit import CreateView, UpdateView
 from .base import LoginRequiredMixin
 from ..forms import SongForm, InstrumentForm
-from django.core.urlresolvers import reverse
+from django.url import reverse
 from django.views.generic.detail import DetailView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect, HttpResponseRedirect
