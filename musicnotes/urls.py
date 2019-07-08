@@ -17,7 +17,7 @@ urlpatterns = [
 
     url(r'^songpart/add/(?P<type_nr>[0-9]+)/', views.addSongPart, name='add-song-part'),
     url(r'^songpart/add_existing/(?P<pk>[0-9]+)/', views.addExistingSongPart, name='add-existing-song-part'),
-    url(r'^songpart/remove/(?P<pk>[0-9]+)/', views.removeSongPart, name='remove-song-part'),
+    url(r'^songpart/remove/(?P<pk>[0-9]+)/(?P<number>[0-9]+)', views.removeSongPart, name='remove-song-part'),
 
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
     url(r'^logout/$', views.logout_view, name='logout'),

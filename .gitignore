@@ -2,3 +2,5 @@
 bandnotes/
 manage.py
 musicnotes/views/__pycache__/
+musicnotes/__pycache__/
+musicnotes/migrations/

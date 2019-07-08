@@ -40,7 +40,7 @@ class Song(models.Model):
 
 
 class SongPart(models.Model):
-    number = models.PositiveIntegerField()
+    number = models.CommaSeparatedIntegerField(max_length=100)
     type_name = models.CharField(max_length=10, default='Verse')
     identifier = models.CharField(max_length=1, blank=True, default='')
     count = models.PositiveIntegerField(default=1)

@@ -28,8 +28,8 @@
                         <ul class="list-group">
                         {% for song_part in song_part_list %}
                             <li class="list-group-item">
-                                <span class="badge"><h5>{{song_part.count}}</h5></span>
-                                <h4>{{song_part}} <a href="{% url 'musicnotes:remove-song-part' song_part.pk %}"><span class="glyphicon glyphicon-trash"></span></a></h4>
+                                <!--<span class="badge"><h5>{{song_part.count}}</h5></span>-->
+                                <h4>{{song_part}} <a href="{% url 'musicnotes:remove-song-part' song_part.pk forloop.counter0 %}"><span class="glyphicon glyphicon-trash"></span></a></h4>
                             </li>
                         {% endfor %}
                         </ul>

@@ -1,6 +1,7 @@
 from .base import LoginRequiredMixin
 from ..forms import SongForm, InstrumentForm
-from django.urls import reverse
+#from django.urls import reverse
+from django.core.urlresolvers import reverse
 from django.shortcuts import render,redirect, HttpResponseRedirect
 from django.views import generic
 from ..models import Profile, Song, SongPart, InstrumentPart
@@ -48,9 +49,13 @@ def addSongStep2(request):
     if request.method == 'GET':
         song = Song.objects.get(pk=request.session.get('song', None))
         song_parts = SongPart.objects.filter(song=song)
+
+        # Construct the song_part list by placing the part at their number
+        display_parts = partsToDisplay(song, song_parts)
+
         context = {}
         context['song'] = song
-        context['song_part_list'] = song_parts
+        context['song_part_list'] = display_parts
         context['new_parts'] = ['Intro', 'Verse', 'Chorus', 'Bridge', 'Solo', 'Intermezzo', 'Outro']
         context['existing_parts'] = filterParts(song_parts)
 
@@ -119,10 +124,11 @@ class SongDetailView(LoginRequiredMixin, generic.DetailView):
         context = super(SongDetailView, self).get_context_data(**kwargs)
         song = context['song']
 
-        song_parts = filterParts(SongPart.objects.filter(song=song))
-        print(song_parts)
+        song_parts = SongPart.objects.filter(song=song)
+        display_parts = partsToDisplay(song, song_parts)
+
         instrument_parts = []
-        for part in song_parts:
+        for part in display_parts:
             instrument_parts.append(InstrumentPart.objects.get(song_part=part, instrument='chords'))
 
         context['instrument_part_list'] = instrument_parts
@@ -135,13 +141,11 @@ def addSongPart(request, type_nr):
     part = parts[int(type_nr)]
 
     song = Song.objects.get(pk=request.session.get('song', None))
-
     song_parts = SongPart.objects.filter(song=song)
-    #last_object = song_parts.order_by('-number').first()
 
     identifier = getLetterCount(song_parts.filter(type_name=part).count() + 1)
     song_part = SongPart.objects.create(song=song,
-                                        number=song_parts.count()+1,
+                                        number=str(findNumber(song)+1),
                                         type_name=part,
                                         identifier=identifier,
                                         count=1)
@@ -153,29 +157,84 @@ def addSongPart(request, type_nr):
 def addExistingSongPart(request, pk):
 
     song = Song.objects.get(pk=request.session.get('song', None))
-
     part = SongPart.objects.get(pk=pk)
-    last_object = SongPart.objects.filter(song=song).order_by('-number').first()
 
-    if last_object is not None and last_object.type_name == part.type_name and last_object.identifier == part.identifier:
-
-        last_object.count += 1
-        last_object.save()
-
-    else:
-        song_part = SongPart.objects.create(song=song,
-                                            number=last_object.number+1,
-                                            type_name=part.type_name,
-                                            identifier=part.identifier,
-                                            count=1)
-        song_part.save()
+    part.number += ',' + str(findNumber(song)+1)
+    part.save()
 
     return redirect(reverse('musicnotes:add-song-2'))
 
 
-def removeSongPart(request, pk):
-    song_part = SongPart.objects.get(pk=pk)
-    song_part.delete()
+# Convert the part list to a list with parts at their occurence
+def partsToDisplay(song, parts):
+    result = [None] * findNumber(song)
+    for part in parts:
+        numbers = numberToInt(part.number)
+        for n in numbers:
+            result[n - 1] = part
+
+    return result
+
+
+def findNumber(song):
+    parts = SongPart.objects.filter(song=song)
+
+    highest = 0
+    for part in parts:
+        numbers = numberToInt(part.number)
+        for n in numbers:
+            if n > highest:
+                highest = n
+
+    return highest
+
+def numberToInt(number):
+    numbers = number.split(',')
+    result = []
+
+    for n in numbers:
+        result.append(int(n))
+
+    return result
+
+# Converts an integer list back to a string
+def intsToNumbers(values):
+
+    result = []
+    for v in values:
+        result.append(str(v))
+
+    return ','.join(result)
+
+
+def decreaseNumbersAbove(part, value):
+    numbers = numberToInt(part.number)
+    for i in range(0, len(numbers)):
+        if numbers[i] >= value:
+            numbers[i] -= 1
+
+    part.number = intsToNumbers(numbers)
+    part.save()
+
+
+def removeSongPart(request, pk, number):
+    part = SongPart.objects.get(pk=pk)
+    song = part.song
+    int_number = int(number) + 1
+
+    numbers = numberToInt(part.number)
+    numbers.remove(int_number)
+
+    if len(numbers) > 0:
+        part.number = intsToNumbers(numbers)
+        part.save()
+    else:
+        part.delete()
+
+    # Decrease values above if necessary
+    song_parts = SongPart.objects.filter(song=song)
+    for part in song_parts:
+        decreaseNumbersAbove(part, int_number)
 
     return redirect(reverse('musicnotes:add-song-2'))
 
