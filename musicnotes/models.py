@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import validate_comma_separated_integer_list
 
 # Profile (one to one extension of User class)
 class Profile(models.Model):
@@ -40,7 +41,7 @@ class Song(models.Model):
 
 
 class SongPart(models.Model):
-    number = models.CommaSeparatedIntegerField(max_length=100)
+    number = models.CharField(validators=[validate_comma_separated_integer_list], max_length=100)
     type_name = models.CharField(max_length=10, default='Verse')
     identifier = models.CharField(max_length=1, blank=True, default='')
     count = models.PositiveIntegerField(default=1)
