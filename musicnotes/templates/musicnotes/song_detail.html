@@ -12,13 +12,12 @@
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-2">
                 <div class="btn-group">
-                   <div class="btn btn-warning btn-block"> <h2>{{instrument_part.song_part}}</h2></div>
-                   <div class="btn btn-primary"> <h2>{{instrument_part.song_part.count}}x</h2></div>
-                   {% if instrument_part.capo != 0%}<div class="btn btn-primary"> <h2>{{instrument_part.capo}}</h2></div>{% endif %}
+                   <div class="btn btn-warning btn-lg btn-block"> <h1>{{instrument_part.song_part}}</h1></div>
+                   {% if instrument_part.capo != 0%}<div class="btn btn-primary"> <h2>capo {{instrument_part.capo}}</h2></div>{% endif %}
                 </div>
             </div>
             <div class="col-xs-9 col-sm-9 col-md-10 well">
-                <h2>{{instrument_part.music|safe}}</h2>
+                <h1>{{instrument_part.music|safe}}</h1>
             </div>
         </div>
     {% endfor %}
